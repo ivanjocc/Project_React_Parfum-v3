@@ -19,7 +19,7 @@ mongoose.connect(process.env.MONGO_URI, {
   .catch(err => console.log(err));
 
 app.use('/api/products', require('./routes/products'));
-// app.use('/api/users', require('./routes/users'));
+app.use('/api/users', require('./routes/users'));
 
 app.listen(port, () => {
   console.log(`Servidor corriendo en http://localhost:${port}`);
