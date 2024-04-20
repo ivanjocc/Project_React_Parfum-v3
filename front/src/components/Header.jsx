@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import logo from "../assets/images/AM-logo.svg";
+import logo from "../assets/images/logo.png";
 import styles from "../assets/styles/Header.module.scss";
 import HeaderMenu from "./HeaderMenu";
 import Connexion from "./Connexion";
