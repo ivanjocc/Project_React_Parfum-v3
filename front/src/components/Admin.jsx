@@ -1,23 +1,26 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import styles from "../assets/styles/Admin.module.scss";
 
 const Admin = () => {
   const navigate = useNavigate();
+
+  const navigateToAddProduct = () => {
+    navigate('/add-product');
+  };
 
   const handleLogout = () => {
     navigate('/');
   };
 
   return (
-    <div>
-      <h1>Panel de Administración</h1>
-      <p>Bienvenido al panel de administración. Desde aquí puedes gestionar varios aspectos de la aplicación.</p>
+    <div className={styles.adminPanel}>
+      <h1>Admin Panel</h1>
+      <p>Welcome to the administration panel. From here you can manage various aspects of the application.</p>
 
       <div>
-        <button onClick={() => navigate('/manage-users')}>Gestionar Usuarios</button>
-        <button onClick={() => navigate('/manage-products')}>Gestionar Productos</button>
-        <button onClick={() => navigate('/reports')}>Ver Reportes</button>
-        <button onClick={handleLogout}>Cerrar Sesión</button>
+        <button onClick={navigateToAddProduct}>Add Product</button>
+        <button onClick={handleLogout}>Log Out</button>
       </div>
     </div>
   );

@@ -5,6 +5,7 @@ import Content from "./components/Content";
 import Header from "./components/Header";
 import Banner from "./components/Banner";
 import Connexion from "./components/Connexion";
+import ProductForm from "./components/ProductForm";
 import Admin from "./components/Admin";
 import { produits, accueil } from "./data/data";
 import styles from "./assets/styles/App.module.scss";
@@ -38,6 +39,7 @@ const App = () => {
             />} />
           <Route path="/connexion" element={<Connexion />} />
           <Route path="/admin" element={<Admin />} />
+          <Route path="/add-product" element={<ProductForm />} />
         </Routes>
         <Footer />
       </div>

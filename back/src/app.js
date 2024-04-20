@@ -1,15 +1,22 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const bodyParser = require('body-parser');
+const cors = require('cors');
 require('dotenv').config();
 
 const app = express();
 const port = process.env.PORT || 3001;
 
-const cors = require('cors');
-
 app.use(express.json());
 
+app.use(express.json());
 app.use(cors());
+app.use(express.urlencoded({ extended: true }));
+
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).send('Something broke!');
+});
 
 
 mongoose.connect(process.env.MONGO_URI, {
