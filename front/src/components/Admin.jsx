@@ -9,6 +9,10 @@ const Admin = () => {
     navigate('/add-product');
   };
 
+  const navigateToProductList = () => {
+    navigate('/products');
+  };
+
   const handleLogout = () => {
     navigate('/');
   };
@@ -20,6 +24,7 @@ const Admin = () => {
 
       <div>
         <button onClick={navigateToAddProduct}>Add Product</button>
+        <button onClick={navigateToProductList}>Manage Products</button>
         <button onClick={handleLogout}>Log Out</button>
       </div>
     </div>

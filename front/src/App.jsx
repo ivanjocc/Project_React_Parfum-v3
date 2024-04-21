@@ -7,6 +7,7 @@ import Banner from "./components/Banner";
 import Connexion from "./components/Connexion";
 import ProductForm from "./components/ProductForm";
 import Admin from "./components/Admin";
+import ProductList from './components/ProductList';
 import { produits, accueil } from "./data/data";
 import styles from "./assets/styles/App.module.scss";
 
@@ -32,14 +33,15 @@ const App = () => {
         <Banner />
         <Routes>
           <Route path="/" element={<Content
-              produits={produits}
-              accueil={accueil}
-              handleAjusterProduitFavoris={handleAjusterProduitFavoris}
-              produitsFavoris={produitsFavoris}
-            />} />
+            produits={produits}
+            accueil={accueil}
+            handleAjusterProduitFavoris={handleAjusterProduitFavoris}
+            produitsFavoris={produitsFavoris}
+          />} />
           <Route path="/connexion" element={<Connexion />} />
           <Route path="/admin" element={<Admin />} />
           <Route path="/add-product" element={<ProductForm />} />
+          <Route path="/products" element={<ProductList />} />
         </Routes>
         <Footer />
       </div>
