@@ -1,11 +1,12 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 const Logo = ({ logo }) => {
   return (
     <div className="flex-fill">
-      <a href="#">
-        <img src={logo} alt="Atelier Materi - Haute parfumerie française" />
-      </a>
+      <Link to="/">
+        <img src={logo} alt="Logo" />
+      </Link>
     </div>
   );
 };
