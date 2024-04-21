@@ -2,31 +2,38 @@ import React, { useState } from 'react';
 import styles from "../assets/styles/ProductForm.module.scss";
 
 const ProductForm = () => {
-    const [name, setName] = useState('');
-    const [file, setFile] = useState(null);
+    const [name, setName] = useState('')
+    const [image, setImage] = useState('assets/images/produits/');
     const [note, setNote] = useState('');
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-        const formData = new FormData();
-        formData.append('name', name);
-        formData.append('image', file);
-        formData.append('note', note);
+        const productData = {
+            name,
+            image,
+            note
+        };
 
         try {
             const response = await fetch('/api/products', {
                 method: 'POST',
-                body: formData
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(productData)
             });
+
             if (response.ok) {
+                console.log('Product added successfully');
                 alert('Product added successfully!');
                 setName('');
-                setFile(null);
+                setImage('assets/images/produits/');
                 setNote('');
             } else {
                 throw new Error('Failed to add product');
             }
         } catch (error) {
+            console.error('Failed to add product:', error);
             alert(error.message);
         }
     };
@@ -35,15 +42,15 @@ const ProductForm = () => {
         <form onSubmit={handleSubmit} className={styles.formContainer}>
             <label>
                 Name:
-                <input type="text" value={name} onChange={e => setName(e.target.value)} />
+                <input type="text" value={name} onChange={e => setName(e.target.value)} required />
             </label>
             <label>
-                Image File:
-                <input type="file" onChange={e => setFile(e.target.files[0])} />
+                Image URL:
+                <input type="text" value={image} onChange={e => setImage(e.target.value)} required />
             </label>
             <label>
                 Note:
-                <input type="text" value={note} onChange={e => setNote(e.target.value)} />
+                <input type="text" value={note} onChange={e => setNote(e.target.value)} required />
             </label>
             <button type="submit">Add Product</button>
         </form>
