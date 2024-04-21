@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import styles from "../assets/styles/ProductList.module.scss";
 
 const ProductList = () => {
     const [products, setProducts] = useState([]);
@@ -59,11 +60,11 @@ const ProductList = () => {
     };
 
     return (
-        <div>
+        <div className={styles.productListContainer}>
             <h1>Product List</h1>
-            <ul>
+            <ul className={styles.productList}>
                 {products.map((product, index) => (
-                    <li key={product._id}>
+                    <li key={product._id} className={styles.productItem}>
                         <input
                             type="text"
                             value={product.name}
