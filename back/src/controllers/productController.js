@@ -31,12 +31,14 @@ exports.deleteProduct = async (req, res) => {
 };
 
 exports.updateProduct = async (req, res) => {
+    const { id } = req.params;
+    const { name, image, note } = req.body;
+  
     try {
-        const { name, image, note } = req.body;
-        const result = await Product.findByIdAndUpdate(req.params.id, { name, image, note }, { new: true });
-        if (!result) return res.status(404).json({ message: 'Product not found' });
-        res.json(result);
+      const updatedProduct = await Product.findByIdAndUpdate(id, { name, image, note }, { new: true });
+      res.status(200).json(updatedProduct);
     } catch (error) {
-        res.status(500).json({ message: 'Error updating product', error: error.message });
+      console.error('Failed to update product:', error);
+      res.status(500).json({ error: 'Failed to update product' });
     }
-};
+  };

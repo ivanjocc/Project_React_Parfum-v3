@@ -10,31 +10,85 @@ const ProductList = () => {
             .catch(error => console.error('Error fetching products:', error));
     }, []);
 
-    const handleDelete = (id) => {
-        fetch(`/api/products/${id}`, { method: 'DELETE' })
-            .then(response => {
-                if (response.ok) {
-                    setProducts(products.filter(product => product._id !== id));
-                }
-            })
-            .catch(error => console.error('Failed to delete product:', error));
+    const handleUpdate = (id, updatedProduct) => {
+        fetch(`/api/products/${id}`, {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(updatedProduct)
+        })
+        .then(response => {
+            if (response.ok) {
+                alert('Product updated successfully!');
+                setProducts(products.map(product => product._id === id ? {...product, ...updatedProduct} : product));
+            } else {
+                throw new Error('Failed to update product');
+            }
+        })
+        .catch(error => {
+            console.error('Failed to update product:', error);
+            alert(error.message);
+        });
     };
 
-    const handleEdit = (product) => {
-        // Logic to edit product
-        // This could be setting the product data in a form for editing
-        console.log('Edit product:', product);
+    const handleDelete = (id) => {
+        if (window.confirm('Are you sure you want to delete this product?')) {
+            fetch(`/api/products/${id}`, {
+                method: 'DELETE'
+            })
+            .then(response => {
+                if (response.ok) {
+                    alert('Product deleted successfully!');
+                    setProducts(products.filter(product => product._id !== id));
+                } else {
+                    throw new Error('Failed to delete product');
+                }
+            })
+            .catch(error => {
+                console.error('Failed to delete product:', error);
+                alert(error.message);
+            });
+        }
+    };
+
+    const handleChange = (index, key, value) => {
+        const newProducts = [...products];
+        newProducts[index][key] = value;
+        setProducts(newProducts);
     };
 
     return (
         <div>
             <h1>Product List</h1>
             <ul>
-                {products.map(product => (
+                {products.map((product, index) => (
                     <li key={product._id}>
-                        {product.name} - {product.note}
-                        <button onClick={() => handleEdit(product)}>Edit</button>
-                        <button onClick={() => handleDelete(product._id)}>Delete</button>
+                        <input
+                            type="text"
+                            value={product.name}
+                            onChange={(e) => handleChange(index, 'name', e.target.value)}
+                        />
+                        <input
+                            type="text"
+                            value={product.image}
+                            onChange={(e) => handleChange(index, 'image', e.target.value)}
+                        />
+                        <input
+                            type="text"
+                            value={product.note}
+                            onChange={(e) => handleChange(index, 'note', e.target.value)}
+                        />
+                        <button onClick={() => handleUpdate(product._id, {
+                            name: product.name,
+                            image: product.image,
+                            note: product.note
+                        })}>
+                            Edit
+                        </button>
+                        <button onClick={() => handleDelete(product._id)}>
+                            Delete
+                        </button>
                     </li>
                 ))}
             </ul>
